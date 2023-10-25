@@ -13,7 +13,7 @@ export async function getIcebreaker() {
   const randomNumber = Math.floor(Math.random() * 20);
   console.log(randomNumber);
 
-  return icebreaker[randomNumber].starter_question;
+  return icebreaker[0] /*[randomNumber].starter_question*/;
 }
 
 // Take random number and extract key value pair at Random index
