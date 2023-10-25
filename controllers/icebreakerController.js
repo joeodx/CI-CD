@@ -6,14 +6,14 @@ import path from "node:path";
 const filePath = path.resolve(process.cwd(), "convo_starters.json");
 
 // Function to generate random number between 1 - 20 (Stretch goal: make number relative to number of responses)
-export async function getIcebreaker() {
+export async function getIcebreaker(req, res) {
   const icebreakerJSON = await fs.readFile(filePath, "utf-8");
   const icebreaker = JSON.parse(icebreakerJSON);
 
-  const randomNumber = Math.floor(Math.random() * 20);
-  console.log(randomNumber);
+  // const randomNumber = Math.floor(Math.random() * 20);
+  // console.log(randomNumber);
 
-  return icebreaker[0] /*[randomNumber].starter_question*/;
+  return res.status(200).send(icebreaker) /*[randomNumber].starter_question*/;
 }
 
 // Take random number and extract key value pair at Random index
