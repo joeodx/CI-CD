@@ -1,0 +1,14 @@
+{
+  "name": "project-library",
+  "version": "0.0.0",
+  "private": true,
+  "files": [],
+  "scripts": {},
+  "devDependencies": {
+    "chai": "4.3.7",
+    "html-validate": "8.0.5"
+  },
+  "engines": {
+    "node": ">= 12.0"
+  }
+}

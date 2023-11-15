@@ -1,0 +1,6 @@
+{
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "window.newWindowDimensions": "maximized",
+  "window.restoreFullscreen": true
+}

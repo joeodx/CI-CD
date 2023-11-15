@@ -1,0 +1,225 @@
+{
+	"name": "vscode-html-validate",
+	"displayName": "HTML-validate",
+	"version": "2.8.0",
+	"description": "vscode extension for html-validate",
+	"categories": [
+		"Programming Languages",
+		"Linters"
+	],
+	"keywords": [
+		"html-validate",
+		"multi-root ready"
+	],
+	"homepage": "https://html-validate.org",
+	"bugs": {
+		"url": "https://gitlab.com/html-validate/vscode-html-validate/issues/new"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://gitlab.com/html-validate/vscode-html-validate.git"
+	},
+	"license": "MIT",
+	"author": "David Sveningsson <ext@sidvind.com>",
+	"publisher": "html-validate",
+	"main": "./client/out/extension",
+	"files": [
+		"client/out",
+		"server/out"
+	],
+	"workspaces": [
+		"client",
+		"server",
+		"examples/*"
+	],
+	"scripts": {
+		"build": "tsc -b",
+		"postbuild": "npm run schema",
+		"bundle": "run-s clean bundle:* schema",
+		"bundle:client": "esbuild --bundle --external:vscode --format=cjs --platform=node --outfile=client/out/extension.js client/src/extension.ts",
+		"bundle:server": "esbuild --bundle --external:vscode --format=cjs --platform=node --outfile=server/out/server.js server/src/server.ts",
+		"clean": "rm -rf client/out server/out",
+		"eslint": "eslint .",
+		"eslint:fix": "eslint --fix .",
+		"prepare": "husky install",
+		"prettier:check": "prettier --check .",
+		"prettier:write": "prettier --write .",
+		"schema": "cp -R node_modules/html-validate/dist/schema .",
+		"pretest": "npm run build",
+		"test": "node ./client/out/test/runTest.js",
+		"vscode:prepublish": "npm run bundle",
+		"watch": "tsc -b -w"
+	},
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "HTML-Validate",
+			"properties": {
+				"html-validate.enable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Controls whether html-validate is enabled or not."
+				},
+				"html-validate.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				},
+				"html-validate.validate": {
+					"scope": "resource",
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [
+						"html",
+						"javascript",
+						"markdown",
+						"vue",
+						"vue-html"
+					],
+					"description": "An array of language ids which should be validated by HTML-Validate"
+				}
+			}
+		},
+		"jsonValidation": [
+			{
+				"fileMatch": ".htmlvalidate.json",
+				"url": "./schema/config.json"
+			},
+			{
+				"fileMatch": "elements.json",
+				"url": "./schema/elements.json"
+			}
+		]
+	},
+	"activationEvents": [
+		"onLanguage:html",
+		"workspaceContains:**/.htmlvalidate.{js,json}"
+	],
+	"commitlint": {
+		"extends": "@html-validate"
+	},
+	"lint-staged": {
+		"*.{ts,js,json,md,scss}": "prettier --write"
+	},
+	"prettier": "@html-validate/prettier-config",
+	"release": {
+		"plugins": [
+			"@semantic-release/commit-analyzer",
+			"@semantic-release/release-notes-generator",
+			[
+				"semantic-release-vsce",
+				{
+					"packageVsix": "html-validate.vsix"
+				}
+			],
+			[
+				"@semantic-release/gitlab",
+				{
+					"assets": [
+						{
+							"path": "html-validate.vsix",
+							"label": "Package"
+						}
+					]
+				}
+			],
+			[
+				"@semantic-release/changelog",
+				{
+					"changelogTitle": "# vscode-html-validate changelog"
+				}
+			],
+			[
+				"@semantic-release/exec",
+				{
+					"prepareCmd": "npm run prettier:write"
+				}
+			],
+			[
+				"@semantic-release/git",
+				{
+					"message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
+				}
+			]
+		]
+	},
+	"devDependencies": {
+		"@html-validate/commitlint-config": "3.0.16",
+		"@html-validate/eslint-config": "5.9.9",
+		"@html-validate/eslint-config-typescript": "5.9.9",
+		"@html-validate/prettier-config": "2.3.10",
+		"@semantic-release/changelog": "6.0.3",
+		"@semantic-release/exec": "6.0.3",
+		"@semantic-release/git": "10.0.1",
+		"@semantic-release/gitlab": "12.0.3",
+		"@semantic-release/npm": "10.0.4",
+		"@semantic-release/release-notes-generator": "11.0.3",
+		"@types/chai": "4.3.5",
+		"@types/glob": "8.1.0",
+		"@types/mocha": "10.0.1",
+		"@types/node": "14.18.51",
+		"@types/semver": "7.5.0",
+		"chai": "4.3.7",
+		"esbuild": "0.18.2",
+		"glob": "10.2.7",
+		"html-validate": "8.0.5",
+		"husky": "8.0.3",
+		"lint-staged": "13.2.2",
+		"merge-options": "3.0.4",
+		"mocha": "10.2.0",
+		"npm-run-all": "4.1.5",
+		"prettier": "2.8.8",
+		"semantic-release": "21.0.5",
+		"semantic-release-vsce": "5.5.10",
+		"typescript": "5.1.3",
+		"vsce": "2.15.0"
+	},
+	"engines": {
+		"node": ">= 14.0",
+		"vscode": "^1.68.0"
+	},
+	"icon": "assets/icon.png",
+	"capabilities": {
+		"untrustedWorkspaces": {
+			"supported": false,
+			"description": "The extension requires workspace trust because it loads configuration files and code from the workspace and executes it."
+		}
+	},
+	"renovate": {
+		"extends": [
+			"gitlab>html-validate/renovate-config"
+		],
+		"ignorePaths": [
+			"**/node_modules/**"
+		],
+		"packageRules": [
+			{
+				"packageNames": [
+					"vscode-languageclient",
+					"vscode-languageserver"
+				],
+				"groupName": "vscode-lsp",
+				"groupSlug": "vscode-lsp"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "9960844f-3c7d-4911-87c4-d2be48d72dfd",
+		"publisherId": "b0929f63-6166-4087-a15d-7ea98d280562",
+		"publisherDisplayName": "html-validate",
+		"targetPlatform": "undefined",
+		"updated": false,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1695042352762,
+		"preRelease": false
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"name": "Big-Bang-Pitcch-Black-Theme",
+	"displayName": "Big Bang -> Pitch Black Theme",
+	"description": "Full Black Theme",
+	"version": "1.0.0",
+	"icon": "logo-app-pitch.png",
+	"publisher": "BunghezOvidiu",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BunghezOvidiu37/Big-Bang-Black-Theme-VsCode"
+	},
+	"keywords": [
+		"big bang theme",
+		"full black",
+		"black theme",
+		"amoled",
+		"dark"
+	],
+	"engines": {
+		"vscode": "^1.59.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Big Bang -> Pitch Black Theme",
+				"uiTheme": "hc-black",
+				"path": "./themes/Big Bang - Pitch Black Theme-color-theme.json"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "963b4ca1-e27c-4bfe-8919-a4bd7d50285a",
+		"publisherId": "fe63c69b-8e49-457f-b2c2-b0bc990d2e8c",
+		"publisherDisplayName": "Bunghez Ovidiu",
+		"targetPlatform": "undefined",
+		"updated": false,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1697014034742
+	}
+}

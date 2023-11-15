@@ -1,0 +1,31 @@
+{
+	"name": "pitch-black",
+	"displayName": "Pitch Black",
+	"description": "",
+	"version": "0.0.1",
+	"publisher": "mitko10209",
+	"engines": {
+		"vscode": "^1.57.1"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Pitch Black",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Pitch Black-color-theme.json"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "5e8fc9ee-532c-4968-8bda-e069d6b2b963",
+		"publisherId": "44e23a53-b35d-4572-a887-3741503259cd",
+		"publisherDisplayName": "mitko10209",
+		"targetPlatform": "undefined",
+		"updated": false,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1697014077028
+	}
+}

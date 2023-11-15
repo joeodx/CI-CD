@@ -1,0 +1,45 @@
+{
+	"name": "pitchdark",
+	"displayName": "PitchDark",
+	"description": "Dark theme based on stock Dark+ theme, but with a darker background and more vivid colors.",
+	"version": "0.0.1",
+	"publisher": "hairlesshobo",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hairlesshobo/vscode-pitchdark"
+	},
+	"engines": {
+		"vscode": "^1.39.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "PitchDark",
+				"uiTheme": "vs-dark",
+				"path": "./themes/PitchDark-color-theme.json"
+			}
+		]
+	},
+	"keywords": [
+		"dark",
+		"pitch dark",
+		"pitchdark",
+		"theme"
+	],
+	"galleryBanner": {
+		"color": "#121417",
+		"theme": "dark"
+	},
+	"__metadata": {
+		"id": "e4c5bbdb-ce2c-4220-85cc-99b654efa16c",
+		"publisherId": "0b76ea7e-b5b6-4251-869b-02fc446beac2",
+		"publisherDisplayName": "Steve Cross",
+		"targetPlatform": "undefined",
+		"updated": false,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1697014230178
+	}
+}
