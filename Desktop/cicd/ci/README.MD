@@ -1,24 +1,18 @@
-# Jenkins and Github 
+# CI/CD pipelines with Jenkins and Github
 *****************************
 
 ## Creating a CI/CD pipeline
+
+
+![](https://th.bing.com/th/id/R.a9e359a95eb536995410fda9cac113a7?rik=llCQcpzwEAOavQ&riu=http%3a%2f%2fwww.tmap.net%2fsites%2ftmap%2ffiles%2fstyles%2fmedium%2fpublic%2fimages%2f450_0.png%3fitok%3dK8WoGylh&ehk=4lx253Amy%2fvuIC5P6ZJ3zAoN4LNiDxv%2fdvkxOSoppmo%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1)
 
 What do we want to do?
 
 * We want to create a simple pipeline for CI/CD
 * We want to do this using a code from a github repo 
 * We want to push our code to github in one branch 
-* then automate the test merge and deploy
+* Then automate the test merge and deploy
 
-
-tHE FIRST TEST IS TO AUTOMATICALLY TEST OUR CODE AS SOON AS IT GETS PUSHED
-THEN THIS WILL TRIGGER ANOTEHR JON THAT MRGES THIS CODE TO OUR MAIN BRANCH.
-
-
-## Automation server with Jenkins 
-
-![](images/img_2.png)
- 
  ## First of all what is a CI pipeline?
 
  * A Continuous Integration (CI) pipeline is a set of automated processes that software development teams use to build, test, and deploy their code changes. 
@@ -38,42 +32,148 @@ THEN THIS WILL TRIGGER ANOTEHR JON THAT MRGES THIS CODE TO OUR MAIN BRANCH.
 ## Why use a CI pipeline?
 * There are many uses to a Ci pipeline. It saves time as you can automate the process of thigns you can do manually 
 * It ensures consistency along how code gets built, tested or even deployed 
-  ********************************
+
+![](images/CICD%20(1).png)
+
 
 ## What is a web hook?
-
 * A webhook is a mechanism for automatically triggering an action or notifying an external system when a certain event occurs.
 
 * For example when you order something online, a webhook is the reason you get a confirmation email. 
 
-***********************************
 ## What is a node?
 
 * A node is an instance that is created for running our differnt builds.
 * We can have a master node for production and maybe another node for testing.
 
-# Creating our testing job (CI pipeline)
+<br>
 
 
-* The purpose of this job is to be created in jenkins that wil ltest our app that is in github
-* It is using the main branch but can be used for any branch (see below on CD pipeline where this is changed to a dev branch)
+# CCI/CD Pipeline Documentation 
+*******************
+## Implmenting a CI/CD pipeline with jobs
 
-![](images/Screenshot%202024-05-09%20141903.jpg)
+![](images/overview.png)
 
 
-Okay how do we complete job 1 which is testing the app works that was deployed....steps below!
+### Job 1, 2 and 3 : What do they mean?
+**************
+<br>
 
-1. Log into jenkins. 
+* A Jenkins job, also known as a build job or pipeline, is a task or set of tasks that Jenkins executes as part of a continuous integration (CI) or continuous deployment (CD) process. 
+  
+* These jobs define the steps needed to build, test, deploy, and deliver software applications automatically
 
-2. Add a description to your project and then select the Github project checkbox and add your projects Url.
-   For example mine was : 
-```
-git@github.com:Ziziou91/tech258_cicd.git
-```
+
+We will be setting up 3 jobs as paer of our CI/CD pipeline. Have a look at teh diagram above. What role does each job have?
+
+* Job 1 and 2 are Contrinious Intergration phase of the CICD pipeline.
+
+* Job 3 is the phase of Continious Delivery.
+
+
+#### Job 1 : 
+  Here we are looking to test the application on the Dev branch, ensuring its stabilty before integration into the main branch.
+
+  **What does the job do?**
+  * It creates a dev branch with Git
+  * Tests the Npm on the Dev branch 
+  * It uses a webhook to change to code changes 
+  * It execites the command for testing npm instillation and running tests 
+
+
+
+#### Job 2 : 
+  Once Job 1 has been sucessful and does its job, Job 2 handles the merging of that branch to the main branch 
+
+  **What does the job do?**
+  * It configures GitHub details and merge settings
+  * merges the Dev branch with the main branch
+  * It ensures CI by only triggering if Job 1 has worked.
+
+
+
+#### Job 3 : 
+ Job 3 starts the CD phase of our pipeline by deploying the code from the main branch to production. It our case the aws cloud.
+
+  **What does the job do?**
+  * Retrieves the code from the main branch 
+  * Pushes the code to the production environment, in our case a e2 instnace
+  * It makes sure network security are correct by configuring the port settings 
+  * Then it installs all depedencies the instance needs to run 
+
+
+## Setting up a CI/CD job in jenkins
+
+
+Okay how do we actually set up these jobs in Jenkins? 
+
+Lets do job 1 first...the steps below!
+
+1. **Log into jenkins**. The link can be found here [Jenkins login](http://35.176.161.147:8080/login?from=%2F)
+
+2. **Click New item** 
+
+3. **Enter name** You can put ```<your name> - Ci```
+
+4. **Select Freestyle project** then click enter
+    ![](images/project.jpg)
+
+5. **Add a description to your project** you could call it ```building ci for node.js app```
 
 ![](images/sc.jpg)
 
-3. Go to the office 365 connector and click the option that says **Restrict where this project can be run**. Then under **label expression** add ```sparta-ubuntu-app```
+6. **Add Github and input URL** this is where you add the url of the github repo that holds your app. In my case it was 
+```git@github.com:joeodx/tech258_cicd.git```. You can go to your github code page to find yours if needed.
+
+7. **Click on the option that says restrict where this project can run** then where it says label expression type ```sparta-ubuntu-node```
+
+![](images/ubuntu.jpg)
+
+ 8. **Click on the git button under source managment** and input the url of your git repo. 
+  ![](images/source.jpg)
+
+9. **Now put in your private SSH key** where it stayed credentials. You should have it saved.
+![](images/private%20key.jpg)
+
+10. **Make sure you change the branch supplier** to ```*/dev```
+
+11. **In build environment, tick enable Provide node and npm bin/ folder to PATH** you need to configure the environment to include the node.js and npm binary folders in the PATH. 
+ ![](images/done.jpg)
+
+12. **Click the add build step and then click execute shell** 
+
+![](images/add.jpg)
+
+13. **Now add the following command into that execute shell** this will be executed as part of the build process.
+
+```
+cd
+cd npm install
+npm test
+```
+
+14. **Click save and apply** button when you have finished 
+ ![](images/apply.jpeg)
+
+
+15. **Click run build on the left hand side tab** then check the console outlook, just in case there was any issues.
+![](images/console.jpg)
+
+*****************************
+
+## Adding a web hook with job 2
+
+Now we are going to do job 2. The steps areas follows 
+
+1. 
+
+
+
+
+
+
+16. Go to the office 365 connector and click the option that says **Restrict where this project can be run**. Then under **label expression** add ```sparta-ubuntu-app```
 
 
 4. On the **source managment tab** slect Git. Add the the github repo URL. You should have already have your SSH key set up so you should get a error message now. 
@@ -139,7 +239,7 @@ How do we do that? The steps are below!
 ****************
 1. Create a job on jenkins to test the push on the dev branch.
 2. When something gets pushed a a job gets triggered to test teh code 
-3. 3. Set it up like the job you did before but 
+3.  Set it up like the job you did before but 
 
 
 
