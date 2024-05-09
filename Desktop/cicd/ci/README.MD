@@ -107,23 +107,18 @@ Then click update webhook. The webhook will send a post HTTP request to our jenk
 * You should never code on your main branch. Code on a dev branch or a seperate branch from main.
 
 
-```Set Up Source Code Management:
-In the "Source Code Management" section, configure Jenkins to use your Git repository and specify the dev branch.
-Add Post-Build Action:
-Scroll down to the "Post-build Actions" section and click on "Add post-build action".
-Select "Git Publisher".
-Configure Git Publisher:
-Check the box for "Merge before build".
-Set the "Branch to merge to" as main.
-Optionally, configure merge options such as the merge strategy and fast-forward mode based on your requirements.
-Save and Run the Job:
-Save your Jenkins job configuration.
-Run the job either manually or trigger it automatically based on your
-```
 
-1. Create a dev branch using ```git checkout``` in your local repositry
-2. For testing purposes, make a change to your work. 
-3.  Now using the testing job we created before, if the test pass it shall trigger the next job to merge the code from your new branch you created to ```main```
+1. Create a dev branch using ```git checkout - b dev``` in your local repositry
+2. To push that branch ```git push origin dev```
+
+## Merge code from development branch to main branch
+* Configure Jenkisn to use your Git repo and chosoe the dev branch you have created 
+* Scroll down to the ```post-build-action``` and click on ```add post-build action```
+   * select "Git Publisher"
+   * Check t
+1. For testing purposes, make a change to your work. 
+
+2.  Now using the testing job we created before, if the test pass it shall trigger the next job to merge the code from your new branch you created to ```main```
   
 
 
@@ -135,7 +130,7 @@ Run the job either manually or trigger it automatically based on your
 How do we do this?
 
 1. Create a EC2 instance on AWS- with **Ubuntu 18.04 LTS**
-2. Configure the network security group to allow *ssh*,**3000**(node app) and 8080(for jenkins)
+2. Configure the network security group to allow *ssh*,**3000**(node app) and 8080(for jenkins) and **80** for HTTP traffic
 3. git clone the app coide to the EC2 instance we made.
 4. Install what dependencies are required.
 
