@@ -15,7 +15,7 @@
   Lets looks at what this CI pipeline means belwo : 
  
 
-![](CICD.png)
+![](/images/CICD.png)
 
 When is a CI pipeline used?
 * CI pipelines are used whenever there are code changes to integrate into a project's codebase.
