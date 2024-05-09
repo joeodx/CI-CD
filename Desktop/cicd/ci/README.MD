@@ -219,55 +219,6 @@ Now lets complete job 2. What was it again? Good time for a reminder. We need to
 
 
 
-How do we do that? The steps are below!
-
-
-1. Create a dev branch on your github repo using ```git checkout - b dev```. 
-2. You can do this in your git bash. 
-3. Then  push that branch ```git push origin dev```
-
-* We now want it to automatically merge this branch with the main branch so we need to set up a job to do that. 
-
-
-
-
-
-## Merge code from development branch to main branch
-* Configure Jenkisn to use your Git repo and chosoe the dev branch you have created 
-* Scroll down to the ```post-build-action``` and click on ```add post-build action```
-   * select "Git Publisher"
-   * Check t
-1. For testing purposes, make a change to your work. 
-
-2.  Now using the testing job we created before, if the test pass it shall trigger the next job to merge the code from your new branch you created to ```main```
-   
-  
-
-
-## Continus Delivery with Jenkins 
-
-* Now our code has been tested and has merged to the ```main branch``, the next step is to copy that code over to production
-* In our case that will be a ec2 instance. 
-
-How do we do this?
-
-1. Create a EC2 instance on AWS- with **Ubuntu 18.04 LTS**
-2. Configure the network security group to allow *ssh*,**3000**(node app) and 8080(for jenkins) and **80** for HTTP traffic
-3. git clone the app coide to the EC2 instance we made.
-4. Install what dependencies are required.
-
-* Once this is done we can now ssh into the instancew we made and manually install and start the app
-
-## Continious Deployment with Jenkins 
-
-How do we get our code to automatically deployed to the cloud?
-
-1. Use jenkins to ssh into our EC2 without user input so add the ```frontend command```
-2. Head to the app folder.
-3. Start the app in the background!
-
-***************************************************************
-
 
 
 
