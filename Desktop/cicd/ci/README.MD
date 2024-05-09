@@ -162,67 +162,61 @@ npm test
 
 *****************************
 
-## Adding a web hook with job 2
+## Adding a web hook
 
-Now we are going to do job 2. The steps areas follows 
+Now we are going to add a web hook. The steps are as follows : 
 
-1. 
+1. **Go to build triggers section in jenkins** and tick the github hook trigger for GIT polling option. This wil ltell jenkisn to trigger builds automatically whenevere we make chanes and push to the github repo.
 
+![](images/web.jpg)
 
-
-
-
-
-16. Go to the office 365 connector and click the option that says **Restrict where this project can be run**. Then under **label expression** add ```sparta-ubuntu-app```
-
-
-4. On the **source managment tab** slect Git. Add the the github repo URL. You should have already have your SSH key set up so you should get a error message now. 
-
-5. To fix this, add your private ssh key for the repo to Jenkins, and then choose it in the credentials. 
-
-6. Also **change the branch to main** like below : 
-
-![](images/sc2.jpg)
-
-
-7. Now we need to provide a Node and npm for our app. Under the build environment check Provide Node and npm bin? folder to Path.
-  Change the node installation to ``Sparta-Node-JS```
-
-8. When you go to build tab add this to the execute shell : 
-
-
-```
-cd
-cd npm install
-npm test 
-```
-
-![](images/done.jpg)
-
-
-9. Now save this. Our jenkins Master should be set up now.
-
-10. Now head to your github repp and go to the setting called webhooks. You see an option callled called paylaod, make sure to enter the url for the jenkins serve like below : 
-
- * and the content type is **application/json**
- * click **jsut the push event**
- * click **Active**
-
-
+2. **Go to that githubs repo settings, then click on the webhooks section** and then click add webhook.
+   
 ![](images/3.jpeg)
 
-Then click update webhook. The webhook will send a post HTTP request to our jenkins server. **200** if is correct and **404** if not
+3.**Change the playload URL input to the jenkins Url** so github can send the data to jenkins. For example I used ```http://3.9.14.9:8080/github-webhook/```
 
-11. Now go back to the jenkins config page for our job and under the build triggets tab, make sure to check **Github hook triggers for GITScm polling. 
+4.**Change the content type** to application/json. **Then enable let me see individual events** option 
 
-***************************************************
+5. **Then click on enable pull requets and pushes** and the option **Active is enabled**
+![](images/push.jpg)
+
+6. **Go to repo and make a change to test this** 
+
+## Job 2 steps 
+
+Now lets complete job 2. What was it again? Good time for a reminder. We need to create a job that automatically merges the changes that have been checked by job 1 from the ```dev branch``` to the ```main branch```.
+
+![](images/overview.png)
 
 
-# CD pipelines with jenkins and GIThub
-*************************************
+1. **Configure jenkins to use your github repo and the dev branch**
+   
 
-* To make a Cd pipeline with jenkins, We are going to need to automate certain steps using triggers. This could be webhooks or from Jenkins builds being completed 
-* We need to add the jobs to merge the code. 
+2. **Scroll down to the post-build Actions section and click on Add post build action**
+
+3. **Select git publisher**
+
+4. **Check the box for merge before build** then set the branch merge to main.
+
+*******************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 How do we do that? The steps are below!
@@ -233,13 +227,6 @@ How do we do that? The steps are below!
 3. Then  push that branch ```git push origin dev```
 
 * We now want it to automatically merge this branch with the main branch so we need to set up a job to do that. 
-
-
-## Job 1 
-****************
-1. Create a job on jenkins to test the push on the dev branch.
-2. When something gets pushed a a job gets triggered to test teh code 
-3.  Set it up like the job you did before but 
 
 
 
