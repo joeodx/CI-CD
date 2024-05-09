@@ -106,10 +106,26 @@ Then click update webhook. The webhook will send a post HTTP request to our jenk
 
 * You should never code on your main branch. Code on a dev branch or a seperate branch from main.
 
+
+```Set Up Source Code Management:
+In the "Source Code Management" section, configure Jenkins to use your Git repository and specify the dev branch.
+Add Post-Build Action:
+Scroll down to the "Post-build Actions" section and click on "Add post-build action".
+Select "Git Publisher".
+Configure Git Publisher:
+Check the box for "Merge before build".
+Set the "Branch to merge to" as main.
+Optionally, configure merge options such as the merge strategy and fast-forward mode based on your requirements.
+Save and Run the Job:
+Save your Jenkins job configuration.
+Run the job either manually or trigger it automatically based on your
+```
+
 1. Create a dev branch using ```git checkout``` in your local repositry
 2. For testing purposes, make a change to your work. 
 3.  Now using the testing job we created before, if the test pass it shall trigger the next job to merge the code from your new branch you created to ```main```
   
+
 
 ## Continus Delivery with Jenkins 
 
