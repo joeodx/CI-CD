@@ -190,16 +190,43 @@ Now lets complete job 2. What was it again? Good time for a reminder. We need to
 ![](images/overview.png)
 
 
-1. **Configure jenkins to use your github repo and the dev branch**
-   
+1. **Configure jenkins to use your github repo and the dev branch** First we need to create a new job call. I called it ```joe-ci-merge```
 
-2. **Scroll down to the post-build Actions section and click on Add post build action**
+2. **Then set it up like the job before** by restricting where the project is run to ```sparta-ubuntu-node```
 
-3. **Select git publisher**
+3. **Under the source managment secion select git** and use your ssh link to your github repo.
 
-4. **Check the box for merge before build** then set the branch merge to main.
+4. **Change the branches to build** to */dev and have the additional behaviours as followed : 
 
-*******************************************
+![](images/merge2.jpg)
+
+
+5.**Configure the post build actions** to as follows : 
+
+![](images/merge3.jpg)
+ 
+
+6. **Now select apply and save and run that machine**
+
+
+*********************************************
+
+
+## Plan for job 3 
+
+  This is where we need to take that merged code and push it to the prodcution environment! Here is a plan to do that. 
+
+* Create an EC2 instance with Ubuntu 18.04LTS
+* Ensure that I allow the ports for Jenkins 8080 and SSH 22 into the prod env
+* For Jenkins to access the EC2 I need to use the tech258.pem file on the SSH Agent
+* you need the job to clone the app code over from the main repo
+*Now I need to SSH into the instance to see if the job has been successful and the newly merged app code is present
+* Next I need to now prepare the dependencies for the app to run update, upgrade, nginx?, node.js, pm2?
+
+
+*************************
+
+
 
 
 
